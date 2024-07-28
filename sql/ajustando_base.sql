@@ -21,12 +21,15 @@ end;
 -- mas pode ser melhorada adicionando as novas colunas
 
 create or replace view vw_aluno  as
-select  t."IdAluno", t."IdUnidade", t."Sexo" , t."EstadoCivil" , t."DataNascimento" , t."CorRaca" , t."EnsinoMedio_IdEstabelecimentoEnsino" , 
+select  t."IdAluno",t."IdUnidade", t."Sexo" , t."EstadoCivil" , t."DataNascimento" , t."CorRaca" , t."EnsinoMedio_IdEstabelecimentoEnsino" , 
 t."EnsinoMedio_AnoConclusao" , t2."IdTurma" , t2."IdSituacaoAlunoTurma" , t2."DataSituacaoAtivo" , t2."DataSituacaoInativo" , t2."DataHoraEfetivacaoMatricula", 
-t2."ProblemaAutorizadoMatricula" , t2."IdMotivoInativacao" , t2."ComentarioInativacao" , t2."IdPlanoPagamento_Matricula" , t3."MotivoInativacao" 
+t2."ProblemaAutorizadoMatricula" , t2."IdMotivoInativacao" , t2."ComentarioInativacao" , t2."IdPlanoPagamento_Matricula" , t3."MotivoInativacao", tm."SituacaoAlunoTurma" ,
+extract(year  from age(current_date, t."DataNascimento"::timestamp )) as idade
 from magic_steps.tbaluno t 
 FULL OUTER JOIN magic_steps.tbalunoturma t2 on t."IdAluno" = t2."IdAluno" 
-FULL OUTER JOIN magic_steps.tbmotivoinativacao t3 on t2."IdMotivoInativacao" = t3."IdMotivoInativacao" ;
+FULL OUTER JOIN magic_steps.tbmotivoinativacao t3 on t2."IdMotivoInativacao" = t3."IdMotivoInativacao" 
+join magic_steps.tbsituacaoalunoturma_m tm on t2."IdSituacaoAlunoTurma" = tm."IdSituacaoAlunoTurma" 
+;
 
 
 select * from magic_steps.tbalunoobs t limit 100;
