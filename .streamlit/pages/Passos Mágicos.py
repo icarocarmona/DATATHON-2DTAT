@@ -16,6 +16,8 @@ tab1, tab2, tab3 = st.tabs(["Como funciona a Passos Mágicos", "O que fazem", "O
 
 # tab1 - Como funciona a Passos Mágicos
 with tab1:
+    st.image("https://passosmagicos.org.br/wp-content/uploads/2020/10/Passos-magicos-icon-cor.png", use_column_width=True)
+
     st.write("A Associação Passos Mágicos possui uma trajetória de 30 anos, dedicando-se a transformar a vida de crianças e jovens de baixa renda, oferecendo-lhes melhores oportunidades de futuro.")
 
     st.write("Esta transformação, iniciada por Michelle Flues e Dimetri Ivanoff, começou em 1992 com atividades em orfanatos no município de Embu-Guaçu.")
@@ -34,6 +36,6 @@ with tab2:
 
 # tab3 - Objetivo
 with tab3:
-        st.write("Nosso objetivo é impactar a vida de jovens e crianças, oferecendo meios para que alcancem melhores oportunidades.")
+        st.write("O objetivo da Passos Mágicos é impactar a vida de jovens e crianças, oferecendo meios para que alcancem melhores oportunidades.")
 
-        st.write("Nosso ideal é um Brasil onde todas as crianças e jovens tenham oportunidades iguais para realizarem seus sonhos e se tornem protagonistas de suas próprias histórias.")
+        st.write("O ideal da Passos Mágicos é um Brasil onde todas as crianças e jovens tenham oportunidades iguais para realizarem seus sonhos e se tornem protagonistas de suas próprias histórias.")
