@@ -24,12 +24,16 @@ create or replace view vw_aluno  as
 select  t."IdAluno",t."IdUnidade", t."Sexo" , t."EstadoCivil" , t."DataNascimento" , t."CorRaca" , t."EnsinoMedio_IdEstabelecimentoEnsino" , 
 t."EnsinoMedio_AnoConclusao" , t2."IdTurma" , t2."IdSituacaoAlunoTurma" , t2."DataSituacaoAtivo" , t2."DataSituacaoInativo" , t2."DataHoraEfetivacaoMatricula", 
 t2."ProblemaAutorizadoMatricula" , t2."IdMotivoInativacao" , t2."ComentarioInativacao" , t2."IdPlanoPagamento_Matricula" , t3."MotivoInativacao", tm."SituacaoAlunoTurma" ,
-extract(year  from age(current_date, t."DataNascimento"::timestamp )) as idade
+extract(year  from age(current_date, t."DataNascimento"::timestamp )) as idade,
+obs."DataOcorrencia", obs."ObservacaoRegistro", tip."IdTipoOcorrencia", tip."NomeTipoOcorrencia"
 from magic_steps.tbaluno t 
-FULL OUTER JOIN magic_steps.tbalunoturma t2 on t."IdAluno" = t2."IdAluno" 
+join magic_steps.tbalunoobs obs on t."IdAluno" = obs."IdAluno" 
+join magic_steps.tbtipoocorrencia tip on tip."IdTipoOcorrencia" = obs."IdTipoOcorrencia" 
+JOIN magic_steps.tbalunoturma t2 on t."IdAluno" = t2."IdAluno" 
 FULL OUTER JOIN magic_steps.tbmotivoinativacao t3 on t2."IdMotivoInativacao" = t3."IdMotivoInativacao" 
 join magic_steps.tbsituacaoalunoturma_m tm on t2."IdSituacaoAlunoTurma" = tm."IdSituacaoAlunoTurma" 
 ;
+
 
 
 select * from magic_steps.tbalunoobs t limit 100;
@@ -59,3 +63,35 @@ limit 100;
 select count(distinct "IdAluno" ) from vw_aluno va where "IdMotivoInativacao" is null;
 
 select count(distinct "IdAluno" ) from vw_aluno_inativo vai; 
+
+
+-----
+
+
+CREATE OR REPLACE VIEW magic_steps.vw_aluno_obs
+AS SELECT va."IdAluno",
+    va."IdUnidade",
+    va."Sexo",
+    va."EstadoCivil",
+    va."DataNascimento",
+    va."CorRaca",
+    va."EnsinoMedio_IdEstabelecimentoEnsino",
+    va."EnsinoMedio_AnoConclusao",
+    va."IdTurma",
+    va."IdSituacaoAlunoTurma",
+    va."DataSituacaoAtivo",
+    va."DataSituacaoInativo",
+    va."DataHoraEfetivacaoMatricula",
+    va."ProblemaAutorizadoMatricula",
+    va."IdMotivoInativacao",
+    va."ComentarioInativacao",
+    va."IdPlanoPagamento_Matricula",
+    va."MotivoInativacao",
+    obs."DataOcorrencia",
+    obs."DataInclusao",
+    obs."ObservacaoLiberacao",
+    oc."NomeTipoOcorrencia"
+   FROM vw_aluno va
+     LEFT JOIN magic_steps.tbalunoobs obs ON va."IdAluno" = obs."IdAluno"
+     LEFT JOIN magic_steps.tbtipoocorrencia oc ON obs."IdTipoOcorrencia" = oc."IdTipoOcorrencia"
+  WHERE va."IdMotivoInativacao" IS NOT NULL;
