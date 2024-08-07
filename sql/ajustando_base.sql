@@ -158,3 +158,12 @@ and t."t3_DataSituacaoAtivo" between '2022-01-01 00:00:00' and '2022-12-30 00:00
 
 
 
+----
+--- NOTA FASE MEDIA DAS NOTAS (t4_NotaFase)
+select t2."MotivoInativacao" , t."t2_NomeDisciplina" ,t.idade,t."t7_CorRaca", t."t7_Sexo", t."t3_DataSituacaoAtivo",
+t."t3_DataSituacaoInativo" ,"t3_DataHoraEfetivacaoMatricula" , extract(days from (t."t3_DataSituacaoInativo"::timestamp - t."t3_DataHoraEfetivacaoMatricula"::timestamp)) as dias_matriculado
+, t.* from tb_aluno_full t 
+join tbmotivoinativacao t2 on t."t3_IdMotivoInativacao" = t2."IdMotivoInativacao" 
+where "t3_IdMotivoInativacao" is not null 
+and "t1_IdAluno" = '578'
+and t."t3_DataHoraEfetivacaoMatricula" between '2022-01-01 00:00:00' and '2022-12-30 00:00:00'
