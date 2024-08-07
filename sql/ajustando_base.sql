@@ -90,19 +90,12 @@ AS SELECT va."IdAluno",
     obs."DataOcorrencia",
     obs."DataInclusao",
     obs."ObservacaoLiberacao",
-    oc."NomeTipoOcorrencia"
+    oc."NomeTipoOcorrencia",
+    obs."ObservacaoRegistro"
    FROM vw_aluno va
      LEFT JOIN magic_steps.tbalunoobs obs ON va."IdAluno" = obs."IdAluno"
      LEFT JOIN magic_steps.tbtipoocorrencia oc ON obs."IdTipoOcorrencia" = oc."IdTipoOcorrencia"
   WHERE va."IdMotivoInativacao" IS NOT NULL;
-
-
-
-  ---
-
-
-
-
 
 -- ENTENDENDO COMO FUNCIONA A NOTA POR DISCIPLINA
 select d.*, t.*from tbfasenotaaluno t 
