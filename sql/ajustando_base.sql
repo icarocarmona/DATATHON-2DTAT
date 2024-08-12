@@ -160,3 +160,41 @@ join tbmotivoinativacao t2 on t."t3_IdMotivoInativacao" = t2."IdMotivoInativacao
 where "t3_IdMotivoInativacao" is not null 
 and "t1_IdAluno" = '578'
 and t."t3_DataHoraEfetivacaoMatricula" between '2022-01-01 00:00:00' and '2022-12-30 00:00:00'
+
+----
+
+CREATE OR REPLACE VIEW magic_steps.vw_aluno_obs_v2
+AS 
+SELECT va."IdAluno",
+    va."IdUnidade",
+    va."Sexo",
+    va."EstadoCivil",
+    va."DataNascimento",
+    va."CorRaca",
+    va."EnsinoMedio_IdEstabelecimentoEnsino",
+    va."EnsinoMedio_AnoConclusao",
+    va."IdTurma",
+    va."IdSituacaoAlunoTurma",
+    va."DataSituacaoAtivo",
+    va."DataSituacaoInativo",
+    va."DataHoraEfetivacaoMatricula",
+    va."ProblemaAutorizadoMatricula",
+    va."IdMotivoInativacao",
+    va."ComentarioInativacao",
+    va."IdPlanoPagamento_Matricula",
+    va."MotivoInativacao",
+    obs."DataOcorrencia",
+    obs."DataInclusao",
+    obs."ObservacaoLiberacao",
+    oc."NomeTipoOcorrencia",
+    obs."ObservacaoRegistro",
+    tm."SituacaoAlunoTurma", 
+    tm."SituacaoSistema",
+    tm."SituacaoAcademica"
+   FROM vw_aluno va
+     LEFT JOIN magic_steps.tbalunoobs obs ON va."IdAluno" = obs."IdAluno"
+     LEFT JOIN magic_steps.tbtipoocorrencia oc ON obs."IdTipoOcorrencia" = oc."IdTipoOcorrencia"
+     join magic_steps.tbsituacaoalunoturma_m tm  on tm."IdSituacaoAlunoTurma" = va."IdSituacaoAlunoTurma"
+  WHERE va."IdMotivoInativacao" IS NOT NULL;
+  
+select * from  magic_steps.vw_aluno_obs_v2;
