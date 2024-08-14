@@ -57,7 +57,6 @@ plt.xlabel('Motivo de Inativação')
 plt.ylabel('Número de Alunos')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.show()
 
 # Exibindo o gráfico no Streamlit
 st.pyplot(fig)
@@ -76,7 +75,6 @@ plt.xlabel('Disciplina')
 plt.ylabel('Nota Média')
 plt.xticks(rotation=45, ha='right')
 plt.tight_layout()
-plt.show()
 
 st.pyplot(fig)
 
@@ -124,7 +122,6 @@ plt.ylabel('Número de Alunos')
 plt.title('Distribuição dos Alunos por Situação ao Longo dos Anos')
 plt.legend()
 plt.grid(True)
-plt.show()
 
 st.pyplot(fig)
 
@@ -260,10 +257,6 @@ plt.xticks(rotation=0)
 
 st.pyplot(fig)
 
-st.write("**Distribuição de Gênero:**")
-
-st.write("A distribuição de gênero entre os alunos parece ser equilibrada, com uma representação significativa tanto de alunos do sexo masculino quanto do sexo feminino.")
-
 # Título gráfico - Distribuição de Cor/Raça dos Alunos
 st.write("### Distribuição de Cor/Raça dos Alunos")
 
@@ -276,10 +269,6 @@ plt.ylabel('Número de Alunos')
 plt.xticks(rotation=0)
 
 st.pyplot(fig)
-
-st.write("**Distribuição de Cor/Raça:**")
-
-st.write("A maioria dos alunos se identifica com uma cor/raça específica (representada pelo código "B" no gráfico), o que pode indicar a predominância de um grupo racial na amostra.")
 
 # Título gráfico - Motivos de Inativação dos Alunos
 st.write("### Motivos de Inativação dos Alunos")
@@ -294,6 +283,61 @@ plt.xticks(rotation=45, ha='right')
 
 st.pyplot(fig)
 
-st.write("**Motivos de Inativação:**")
+# COLOCAR TEXTOS DESSES TRÊS GRÁFICOS ACIMA ^ 
 
-st.write("A maioria dos alunos se identifica com uma cor/raça específica (representada pelo código "B" no gráfico), o que pode indicar a predominância de um grupo racial na amostra.")
+# Título gráfico - Situações dos Alunos nas Turmas
+st.write("### Situações dos Alunos nas Turmas")
+
+# Analisando as situações dos alunos nas aulas
+student_situations = df['IdSituacaoAlunoTurma'].value_counts()
+
+# Plotar a distribuição das situações dos alunos nas aulas
+fig = plt.figure(figsize=(10, 5))
+student_situations.plot(kind='bar')
+plt.title('Situações dos Alunos nas Turmas')
+plt.xlabel('ID da Situação do Aluno na Turma')
+plt.ylabel('Número de Alunos')
+plt.xticks(rotation=0)
+
+st.pyplot(fig)
+
+# Verificando se há códigos de situação específicos com os comentários, se disponíveis
+unique_situations_with_comments = df[['IdSituacaoAlunoTurma', 'ComentarioInativacao']].dropna().drop_duplicates()
+
+unique_situations_with_comments.head()
+
+# COLOCAR TEXTOS DESSE GRÁFICO ACIMA ^ 
+
+# Comparando as situações dos alunos com dados demográficos: gênero e raça.
+situation_gender = df.groupby(['IdSituacaoAlunoTurma', 'Sexo']).size().unstack().fillna(0)
+situation_race = df.groupby(['IdSituacaoAlunoTurma', 'CorRaca']).size().unstack().fillna(0)
+
+# Título gráfico - Situações dos Alunos nas Turmas por Gênero
+st.write("### Situações dos Alunos nas Turmas por Gênero")
+
+# Plotar a comparação entre as situações dos alunos e o gênero
+fig, ax = plt.subplots(figsize=(12, 8))
+situation_gender.plot(kind='bar', stacked=True, ax=ax)
+plt.title('Situações dos Alunos nas Turmas por Gênero')
+plt.xlabel('ID da Situação do Aluno na Turma')
+plt.ylabel('Número de Alunos')
+plt.xticks(rotation=0)
+plt.legend(title='Gênero')
+
+st.pyplot(fig)
+
+# Título gráfico - Situações dos Alunos nas Turmas por Cor/Raça
+st.write("### Situações dos Alunos nas Turmas por Cor/Raça")
+
+# Plotar a comparação entre as situações dos alunos e a raça
+fig, ax = plt.subplots(figsize=(12, 8))
+situation_race.plot(kind='bar', stacked=True, ax=ax)
+plt.title('Situações dos Alunos nas Turmas por Cor/Raça')
+plt.xlabel('ID da Situação do Aluno na Turma')
+plt.ylabel('Número de Alunos')
+plt.xticks(rotation=0)
+plt.legend(title='Cor/Raça')
+
+st.pyplot(fig)
+
+# COLOCAR TEXTOS DESSES GRÁFICOS ACIMA ^ 
