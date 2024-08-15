@@ -1,7 +1,0 @@
-GET https://dev.azure.com/V8InnovationLabs/IA%20Data%20Sherlock/_apis/wit/wiql?api-version=7.1-preview.3 HTTP/1.1
-
-content-type: application/json
-
-{
-    "query": "SELECT [System.Id], [System.Title] FROM workitems WHERE [System.Tags] CONTAINS 'my-first-tag'"
-}
