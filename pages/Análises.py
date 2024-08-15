@@ -71,7 +71,7 @@ with tab1:
     st.pyplot(fig)
 
     # Título gráfico - Desempenho Médio por Disciplina
-    st.write("### Desempenho Médio por Disciplina")
+    st.write("### dDesempenho Médio por Disciplina")
 
     # Calcule a média de notas por disciplina
     average_grade_per_discipline = df_inativos_full.groupby(
