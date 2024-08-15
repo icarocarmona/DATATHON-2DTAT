@@ -257,6 +257,8 @@ plt.xticks(rotation=0)
 
 st.pyplot(fig)
 
+st.write("A distribuição de gênero entre os alunos parece ser equilibrada, com uma representação significativa tanto de alunos do sexo masculino quanto do sexo feminino.")
+
 # Título gráfico - Distribuição de Cor/Raça dos Alunos
 st.write("### Distribuição de Cor/Raça dos Alunos")
 
@@ -269,6 +271,8 @@ plt.ylabel('Número de Alunos')
 plt.xticks(rotation=0)
 
 st.pyplot(fig)
+
+st.write("A maioria dos alunos se identifica com uma cor/raça específica representada pelo código B no gráfico, o que pode indicar a predominância de um grupo racial na amostra.")
 
 # Título gráfico - Motivos de Inativação dos Alunos
 st.write("### Motivos de Inativação dos Alunos")
@@ -283,7 +287,7 @@ plt.xticks(rotation=45, ha='right')
 
 st.pyplot(fig)
 
-# COLOCAR TEXTOS DESSES TRÊS GRÁFICOS ACIMA ^ 
+st.write("O motivo mais comum para a inativação dos alunos é Falta de retorno às nossas tentativas de contato, seguido por Conflito com horário escolar / período integral. Isso sugere que a comunicação e a compatibilidade de horários são áreas críticas que precisam de atenção.")
 
 # Título gráfico - Situações dos Alunos nas Turmas
 st.write("### Situações dos Alunos nas Turmas")
@@ -306,7 +310,21 @@ unique_situations_with_comments = df[['IdSituacaoAlunoTurma', 'ComentarioInativa
 
 unique_situations_with_comments.head()
 
-# COLOCAR TEXTOS DESSE GRÁFICO ACIMA ^ 
+st.write("**A análise das situações dos alunos nas turmas revela o seguinte:**")
+
+st.write("**Distribuição das Situações:**")
+
+st.write("A maioria dos alunos está associada a um único código de situação, que é o 14. Esse código representa uma categoria comum de situação dos alunos em suas respectivas turmas.")
+
+st.write("**Comentários Associados:**")
+
+st.write("Para algumas situações, existem comentários adicionais que fornecem contexto. Por exemplo:")
+
+st.write("Situação 14 está associada a comentários sobre Retorno das aulas na escola para o presencial e Falta de condições financeiras para o transporte.")
+
+st.write("Situação 19 tem comentários como Alfa N - 1N e Vide ocorrência, indicando reavaliações ou referências a outras ocorrências.")
+
+st.write("Essas informações podem ser úteis para entender melhor as razões por trás das situações dos alunos nas turmas e ajudar a identificar áreas onde intervenções ou suporte adicional podem ser necessários.")
 
 # Comparando as situações dos alunos com dados demográficos: gênero e raça.
 situation_gender = df.groupby(['IdSituacaoAlunoTurma', 'Sexo']).size().unstack().fillna(0)
@@ -340,4 +358,16 @@ plt.legend(title='Cor/Raça')
 
 st.pyplot(fig)
 
-# COLOCAR TEXTOS DESSES GRÁFICOS ACIMA ^ 
+st.write("**A análise das situações dos alunos nas turmas em relação aos dados demográficos de gênero e cor/raça revela o seguinte:**")
+
+st.write("**Situações por Gênero:**")
+
+st.write("Para a situação mais comum, código 14, há um equilíbrio na distribuição entre alunos do sexo masculino e feminino.")
+
+st.write("Para outras situações, como o código 19, a distribuição também parece relativamente equilibrada, indicando que as questões que afetam as situações dos alunos não são fortemente influenciadas pelo gênero.")
+
+st.write("**Situações por Cor/Raça:**")
+
+st.write("A maioria das situações, especialmente o código 14, está associada ao grupo racial predominante, código B.")
+
+st.write("Isso reflete a distribuição geral de raça/cor no conjunto de dados, sem grandes desvios em termos de situação acadêmica.")
