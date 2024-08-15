@@ -18,11 +18,13 @@ st.set_page_config(
 st.header('🪄 Análise Exploratória', divider='rainbow')
 
 # Criando a conexão com o BD
+
+
 def create_conn():
-# Defina os parâmetros de conexão
-    db_user = 'magic-steps_owner'
-    db_password = 'FGD4APlVcW0u'
-    db_host = 'ep-curly-wave-a4dkdimo.us-east-1.aws.neon.tech'
+    # Defina os parâmetros de conexão
+    db_user = st.secrets["DB_USER"]
+    db_password = st.secrets["DB_PASSWORD"]
+    db_host = st.secrets["DB_HOST"]
     db_port = '5432'
     db_name = 'magic-steps'
 
@@ -32,6 +34,8 @@ def create_conn():
     # Crie um engine do SQLAlchemy
     engine = create_engine(connection_url)
     return engine
+
+
 engine = create_conn()
 # Fim conexão BD
 
@@ -70,7 +74,8 @@ with tab1:
     st.write("### Desempenho Médio por Disciplina")
 
     # Calcule a média de notas por disciplina
-    average_grade_per_discipline = df_inativos_full.groupby('nomedisciplina')['notafase'].mean().sort_values(ascending=False)
+    average_grade_per_discipline = df_inativos_full.groupby(
+        'nomedisciplina')['notafase'].mean().sort_values(ascending=False)
 
     # Plote as médias de notas por disciplina
     fig = plt.figure(figsize=(10, 6))
@@ -97,21 +102,26 @@ with tab1:
     st.write("### Distribuição dos Alunos por Situação ao Longo dos Anos")
 
     # Ler as tabelas do PostgreSQL para dataframes pandas
-    tbsituacaoalunoturma_m = pd.read_sql_table('tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
-    tbalunoturma = pd.read_sql_table('tbalunoturma', con=engine, schema='magic_steps')
+    tbsituacaoalunoturma_m = pd.read_sql_table(
+        'tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
+    tbalunoturma = pd.read_sql_table(
+        'tbalunoturma', con=engine, schema='magic_steps')
 
     # Fazer o join entre os dataframes
-    merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma, left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
+    merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma,
+                         left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
 
     # Filtrar os dados conforme a condição especificada
     filtered_df = merged_df[merged_df['SituacaoSistema'] != 'P']
 
     # Converter a coluna de data para datetime e extrair o ano
-    filtered_df['DataSituacaoAtivo'] = pd.to_datetime(filtered_df['DataSituacaoAtivo'])
+    filtered_df['DataSituacaoAtivo'] = pd.to_datetime(
+        filtered_df['DataSituacaoAtivo'])
     filtered_df['ano'] = filtered_df['DataSituacaoAtivo'].dt.year
 
     # Agrupar pelos campos necessários e contar
-    grouped_df = filtered_df.groupby(['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
+    grouped_df = filtered_df.groupby(
+        ['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
 
     # Ordenar por ano em ordem decrescente
     result_df = grouped_df.sort_values(by='ano', ascending=False)
@@ -133,7 +143,8 @@ with tab1:
     # Título gráfico - Tendências de Situação dos Alunos ao Longo dos Anos
     st.write("### Tendências de Situação dos Alunos ao Longo dos Anos")
 
-    pivot_df = result_df.pivot(index='ano', columns='SituacaoAlunoTurma', values='count')
+    pivot_df = result_df.pivot(
+        index='ano', columns='SituacaoAlunoTurma', values='count')
 
     fig, ax = plt.subplots(figsize=(12, 8))
     pivot_df.plot(kind='bar', stacked=True, ax=ax)
@@ -166,24 +177,30 @@ with tab1:
 
     # Conectar ao banco de dados e ler as tabelas
     engine = create_conn()
-    tbsituacaoalunoturma_m = pd.read_sql_table('tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
-    tbalunoturma = pd.read_sql_table('tbalunoturma', con=engine, schema='magic_steps')
+    tbsituacaoalunoturma_m = pd.read_sql_table(
+        'tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
+    tbalunoturma = pd.read_sql_table(
+        'tbalunoturma', con=engine, schema='magic_steps')
 
     # Fazer o join entre os dataframes
-    merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma, left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
+    merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma,
+                         left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
 
     # Filtrar os dados conforme a condição especificada
     filtered_df = merged_df[merged_df['SituacaoSistema'] != 'P']
 
     # Converter a coluna de data para datetime e extrair o ano
-    filtered_df['DataSituacaoAtivo'] = pd.to_datetime(filtered_df['DataSituacaoAtivo'])
+    filtered_df['DataSituacaoAtivo'] = pd.to_datetime(
+        filtered_df['DataSituacaoAtivo'])
     filtered_df['ano'] = filtered_df['DataSituacaoAtivo'].dt.year
 
     # Filtrar apenas os "Desistentes"
-    desistentes_df = filtered_df[filtered_df['SituacaoAlunoTurma'] == 'Desistente']
+    desistentes_df = filtered_df[filtered_df['SituacaoAlunoTurma']
+                                 == 'Desistente']
 
     # Agrupar pelos campos necessários e contar
-    grouped_df = desistentes_df.groupby(['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
+    grouped_df = desistentes_df.groupby(
+        ['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
 
     # Ordenar por ano em ordem decrescente
     result_df = grouped_df.sort_values(by='ano', ascending=False)
@@ -209,7 +226,8 @@ with tab1:
     st.write("### Tendências de Desistentes ao Longo dos Anos")
 
     # Análise de tendências
-    pivot_df = result_df.pivot(index='ano', columns='SituacaoAlunoTurma', values='count')
+    pivot_df = result_df.pivot(
+        index='ano', columns='SituacaoAlunoTurma', values='count')
 
     fig, ax = plt.subplots(figsize=(12, 8))
     pivot_df.plot(kind='bar', stacked=True, ax=ax)
@@ -311,7 +329,8 @@ with tab1:
     st.pyplot(fig)
 
     # Verificando se há códigos de situação específicos com os comentários, se disponíveis
-    unique_situations_with_comments = df[['IdSituacaoAlunoTurma', 'ComentarioInativacao']].dropna().drop_duplicates()
+    unique_situations_with_comments = df[[
+        'IdSituacaoAlunoTurma', 'ComentarioInativacao']].dropna().drop_duplicates()
 
     unique_situations_with_comments.head()
 
@@ -332,8 +351,10 @@ with tab1:
     st.write("Essas informações podem ser úteis para entender melhor as razões por trás das situações dos alunos nas turmas e ajudar a identificar áreas onde intervenções ou suporte adicional podem ser necessários.")
 
     # Comparando as situações dos alunos com dados demográficos: gênero e raça.
-    situation_gender = df.groupby(['IdSituacaoAlunoTurma', 'Sexo']).size().unstack().fillna(0)
-    situation_race = df.groupby(['IdSituacaoAlunoTurma', 'CorRaca']).size().unstack().fillna(0)
+    situation_gender = df.groupby(
+        ['IdSituacaoAlunoTurma', 'Sexo']).size().unstack().fillna(0)
+    situation_race = df.groupby(
+        ['IdSituacaoAlunoTurma', 'CorRaca']).size().unstack().fillna(0)
 
     # Título gráfico - Situações dos Alunos nas Turmas por Gênero
     st.write("### Situações dos Alunos nas Turmas por Gênero")
