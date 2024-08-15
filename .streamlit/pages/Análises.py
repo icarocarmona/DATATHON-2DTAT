@@ -37,337 +37,354 @@ engine = create_conn()
 
 # ------- Início Análises -------
 
-# Defina a consulta SQL para a view
-query = 'SELECT * FROM magic_steps.inativos_full'
+# Criando as abas
+tab1, tab2, tab3 = st.tabs(["Gráficos", "Conclusão", "Sugestão"])
 
-# Execute a consulta e carregue os resultados em um DataFrame
-df_inativos_full = pd.read_sql(query, engine)
+# tab1 - Gráficos
+with tab1:
+    # Defina a consulta SQL para a view
+    query = 'SELECT * FROM magic_steps.inativos_full'
 
-# Título gráfico - Distribuição dos Motivos de Inativação
-st.write("### Distribuição dos Motivos de Inativação")
+    # Execute a consulta e carregue os resultados em um DataFrame
+    df_inativos_full = pd.read_sql(query, engine)
 
-# Conte as ocorrências de cada motivo de inativação
-reason_counts = df_inativos_full['motivoinativacao'].value_counts()
+    # Título gráfico - Distribuição dos Motivos de Inativação
+    st.write("### Distribuição dos Motivos de Inativação")
 
-# Plote a distribuição dos motivos de inativação
-fig = plt.figure(figsize=(10, 6))
-reason_counts.plot(kind='bar')
-plt.title('Distribuição dos Motivos de Inativação')
-plt.xlabel('Motivo de Inativação')
-plt.ylabel('Número de Alunos')
-plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
+    # Conte as ocorrências de cada motivo de inativação
+    reason_counts = df_inativos_full['motivoinativacao'].value_counts()
 
-# Exibindo o gráfico no Streamlit
-st.pyplot(fig)
+    # Plote a distribuição dos motivos de inativação
+    fig = plt.figure(figsize=(10, 6))
+    reason_counts.plot(kind='bar')
+    plt.title('Distribuição dos Motivos de Inativação')
+    plt.xlabel('Motivo de Inativação')
+    plt.ylabel('Número de Alunos')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
 
-# Título gráfico - Desempenho Médio por Disciplina
-st.write("### Desempenho Médio por Disciplina")
+    # Exibindo o gráfico no Streamlit
+    st.pyplot(fig)
 
-# Calcule a média de notas por disciplina
-average_grade_per_discipline = df_inativos_full.groupby('nomedisciplina')['notafase'].mean().sort_values(ascending=False)
+    # Título gráfico - Desempenho Médio por Disciplina
+    st.write("### Desempenho Médio por Disciplina")
 
-# Plote as médias de notas por disciplina
-fig = plt.figure(figsize=(10, 6))
-average_grade_per_discipline.plot(kind='bar')
-plt.title('Desempenho Médio por Disciplina')
-plt.xlabel('Disciplina')
-plt.ylabel('Nota Média')
-plt.xticks(rotation=45, ha='right')
-plt.tight_layout()
+    # Calcule a média de notas por disciplina
+    average_grade_per_discipline = df_inativos_full.groupby('nomedisciplina')['notafase'].mean().sort_values(ascending=False)
 
-st.pyplot(fig)
+    # Plote as médias de notas por disciplina
+    fig = plt.figure(figsize=(10, 6))
+    average_grade_per_discipline.plot(kind='bar')
+    plt.title('Desempenho Médio por Disciplina')
+    plt.xlabel('Disciplina')
+    plt.ylabel('Nota Média')
+    plt.xticks(rotation=45, ha='right')
+    plt.tight_layout()
 
-st.write("**Outras prioridades/trabalho:** Este é o motivo mais frequente para a inativação dos alunos. Isso sugere que muitos estudantes estão priorizando o trabalho ou outras atividades sobre seus estudos.")
+    st.pyplot(fig)
 
-st.write("**Sem adaptação ao curso:** Outro motivo comum, indicando que alguns alunos podem não ter se ajustado bem ao curso ou à instituição.")
+    st.write("**Outras prioridades/trabalho:** Este é o motivo mais frequente para a inativação dos alunos. Isso sugere que muitos estudantes estão priorizando o trabalho ou outras atividades sobre seus estudos.")
 
-st.write("**Desistência por motivos pessoais:** Reflete que questões pessoais são uma razão significativa para alguns alunos deixarem o curso.")
+    st.write("**Sem adaptação ao curso:** Outro motivo comum, indicando que alguns alunos podem não ter se ajustado bem ao curso ou à instituição.")
 
-st.write("**Problemas financeiros:** Também aparece com frequência, indicando que dificuldades econômicas têm um impacto considerável na continuidade dos estudos.")
+    st.write("**Desistência por motivos pessoais:** Reflete que questões pessoais são uma razão significativa para alguns alunos deixarem o curso.")
 
-st.write("Este gráfico ajuda a entender melhor os desafios enfrentados pelos alunos e pode auxiliar na formulação de estratégias para reduzir as taxas de inativação, como suporte financeiro, aconselhamento acadêmico e ajustes curriculares.")
+    st.write("**Problemas financeiros:** Também aparece com frequência, indicando que dificuldades econômicas têm um impacto considerável na continuidade dos estudos.")
 
-# Título gráfico - Distribuição dos Alunos por Situação ao Longo dos Anos
-st.write("### Distribuição dos Alunos por Situação ao Longo dos Anos")
+    st.write("Este gráfico ajuda a entender melhor os desafios enfrentados pelos alunos e pode auxiliar na formulação de estratégias para reduzir as taxas de inativação, como suporte financeiro, aconselhamento acadêmico e ajustes curriculares.")
 
-# Ler as tabelas do PostgreSQL para dataframes pandas
-tbsituacaoalunoturma_m = pd.read_sql_table('tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
-tbalunoturma = pd.read_sql_table('tbalunoturma', con=engine, schema='magic_steps')
+    # Título gráfico - Distribuição dos Alunos por Situação ao Longo dos Anos
+    st.write("### Distribuição dos Alunos por Situação ao Longo dos Anos")
 
-# Fazer o join entre os dataframes
-merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma, left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
+    # Ler as tabelas do PostgreSQL para dataframes pandas
+    tbsituacaoalunoturma_m = pd.read_sql_table('tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
+    tbalunoturma = pd.read_sql_table('tbalunoturma', con=engine, schema='magic_steps')
 
-# Filtrar os dados conforme a condição especificada
-filtered_df = merged_df[merged_df['SituacaoSistema'] != 'P']
+    # Fazer o join entre os dataframes
+    merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma, left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
 
-# Converter a coluna de data para datetime e extrair o ano
-filtered_df['DataSituacaoAtivo'] = pd.to_datetime(filtered_df['DataSituacaoAtivo'])
-filtered_df['ano'] = filtered_df['DataSituacaoAtivo'].dt.year
+    # Filtrar os dados conforme a condição especificada
+    filtered_df = merged_df[merged_df['SituacaoSistema'] != 'P']
 
-# Agrupar pelos campos necessários e contar
-grouped_df = filtered_df.groupby(['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
+    # Converter a coluna de data para datetime e extrair o ano
+    filtered_df['DataSituacaoAtivo'] = pd.to_datetime(filtered_df['DataSituacaoAtivo'])
+    filtered_df['ano'] = filtered_df['DataSituacaoAtivo'].dt.year
 
-# Ordenar por ano em ordem decrescente
-result_df = grouped_df.sort_values(by='ano', ascending=False)
+    # Agrupar pelos campos necessários e contar
+    grouped_df = filtered_df.groupby(['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
 
-# Plotar a distribuição dos alunos por situação ao longo dos anos
-fig = plt.figure(figsize=(12, 8))
-for situacao in result_df['SituacaoAlunoTurma'].unique():
-    subset = result_df[result_df['SituacaoAlunoTurma'] == situacao]
-    plt.plot(subset['ano'], subset['count'], label=situacao)
+    # Ordenar por ano em ordem decrescente
+    result_df = grouped_df.sort_values(by='ano', ascending=False)
 
-plt.xlabel('Ano')
-plt.ylabel('Número de Alunos')
-plt.title('Distribuição dos Alunos por Situação ao Longo dos Anos')
-plt.legend()
-plt.grid(True)
+    # Plotar a distribuição dos alunos por situação ao longo dos anos
+    fig = plt.figure(figsize=(12, 8))
+    for situacao in result_df['SituacaoAlunoTurma'].unique():
+        subset = result_df[result_df['SituacaoAlunoTurma'] == situacao]
+        plt.plot(subset['ano'], subset['count'], label=situacao)
 
-st.pyplot(fig)
+    plt.xlabel('Ano')
+    plt.ylabel('Número de Alunos')
+    plt.title('Distribuição dos Alunos por Situação ao Longo dos Anos')
+    plt.legend()
+    plt.grid(True)
 
-# Título gráfico - Tendências de Situação dos Alunos ao Longo dos Anos
-st.write("### Tendências de Situação dos Alunos ao Longo dos Anos")
+    st.pyplot(fig)
 
-pivot_df = result_df.pivot(index='ano', columns='SituacaoAlunoTurma', values='count')
+    # Título gráfico - Tendências de Situação dos Alunos ao Longo dos Anos
+    st.write("### Tendências de Situação dos Alunos ao Longo dos Anos")
 
-fig, ax = plt.subplots(figsize=(12, 8))
-pivot_df.plot(kind='bar', stacked=True, ax=ax)
+    pivot_df = result_df.pivot(index='ano', columns='SituacaoAlunoTurma', values='count')
 
-plt.xlabel('Ano')
-plt.ylabel('Número de Alunos')
-plt.title('Tendências de Situação dos Alunos ao Longo dos Anos')
-plt.legend(title='Situação do Aluno')
-plt.xticks(rotation=45)
-plt.grid(True)
+    fig, ax = plt.subplots(figsize=(12, 8))
+    pivot_df.plot(kind='bar', stacked=True, ax=ax)
 
-st.pyplot(fig)
+    plt.xlabel('Ano')
+    plt.ylabel('Número de Alunos')
+    plt.title('Tendências de Situação dos Alunos ao Longo dos Anos')
+    plt.legend(title='Situação do Aluno')
+    plt.xticks(rotation=45)
+    plt.grid(True)
 
-# Título gráfico - Comparação Entre Situações de Alunos
-st.write("### Comparação Entre Situações de Alunos")
+    st.pyplot(fig)
 
-# Comparação entre situações
-fig = plt.figure(figsize=(12, 8))
-result_df.groupby('SituacaoAlunoTurma')['count'].sum().plot(kind='bar')
+    # Título gráfico - Comparação Entre Situações de Alunos
+    st.write("### Comparação Entre Situações de Alunos")
 
-plt.xlabel('Situação do Aluno')
-plt.ylabel('Total de Alunos')
-plt.title('Comparação Entre Situações de Alunos')
-plt.xticks(rotation=45)
-plt.grid(True)
+    # Comparação entre situações
+    fig = plt.figure(figsize=(12, 8))
+    result_df.groupby('SituacaoAlunoTurma')['count'].sum().plot(kind='bar')
 
-st.pyplot(fig)
+    plt.xlabel('Situação do Aluno')
+    plt.ylabel('Total de Alunos')
+    plt.title('Comparação Entre Situações de Alunos')
+    plt.xticks(rotation=45)
+    plt.grid(True)
 
-# Conexão BD para gráficos seguintes
+    st.pyplot(fig)
 
-# Conectar ao banco de dados e ler as tabelas
-engine = create_conn()
-tbsituacaoalunoturma_m = pd.read_sql_table('tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
-tbalunoturma = pd.read_sql_table('tbalunoturma', con=engine, schema='magic_steps')
+    # Conexão BD para gráficos seguintes
 
-# Fazer o join entre os dataframes
-merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma, left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
+    # Conectar ao banco de dados e ler as tabelas
+    engine = create_conn()
+    tbsituacaoalunoturma_m = pd.read_sql_table('tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
+    tbalunoturma = pd.read_sql_table('tbalunoturma', con=engine, schema='magic_steps')
 
-# Filtrar os dados conforme a condição especificada
-filtered_df = merged_df[merged_df['SituacaoSistema'] != 'P']
+    # Fazer o join entre os dataframes
+    merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma, left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
 
-# Converter a coluna de data para datetime e extrair o ano
-filtered_df['DataSituacaoAtivo'] = pd.to_datetime(filtered_df['DataSituacaoAtivo'])
-filtered_df['ano'] = filtered_df['DataSituacaoAtivo'].dt.year
+    # Filtrar os dados conforme a condição especificada
+    filtered_df = merged_df[merged_df['SituacaoSistema'] != 'P']
 
-# Filtrar apenas os "Desistentes"
-desistentes_df = filtered_df[filtered_df['SituacaoAlunoTurma'] == 'Desistente']
+    # Converter a coluna de data para datetime e extrair o ano
+    filtered_df['DataSituacaoAtivo'] = pd.to_datetime(filtered_df['DataSituacaoAtivo'])
+    filtered_df['ano'] = filtered_df['DataSituacaoAtivo'].dt.year
 
-# Agrupar pelos campos necessários e contar
-grouped_df = desistentes_df.groupby(['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
+    # Filtrar apenas os "Desistentes"
+    desistentes_df = filtered_df[filtered_df['SituacaoAlunoTurma'] == 'Desistente']
 
-# Ordenar por ano em ordem decrescente
-result_df = grouped_df.sort_values(by='ano', ascending=False)
+    # Agrupar pelos campos necessários e contar
+    grouped_df = desistentes_df.groupby(['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
 
-# Título gráfico - Distribuição dos Desistentes ao Longo dos Anos
-st.write("### Distribuição dos Desistentes ao Longo dos Anos")
+    # Ordenar por ano em ordem decrescente
+    result_df = grouped_df.sort_values(by='ano', ascending=False)
 
-# Plotar a distribuição dos desistentes ao longo dos anos
-fig = plt.figure(figsize=(12, 8))
-for situacao in result_df['SituacaoAlunoTurma'].unique():
-    subset = result_df[result_df['SituacaoAlunoTurma'] == situacao]
-    plt.plot(subset['ano'], subset['count'], label=situacao)
+    # Título gráfico - Distribuição dos Desistentes ao Longo dos Anos
+    st.write("### Distribuição dos Desistentes ao Longo dos Anos")
 
-plt.xlabel('Ano')
-plt.ylabel('Número de Alunos')
-plt.title('Distribuição dos Desistentes ao Longo dos Anos')
-plt.legend()
-plt.grid(True)
+    # Plotar a distribuição dos desistentes ao longo dos anos
+    fig = plt.figure(figsize=(12, 8))
+    for situacao in result_df['SituacaoAlunoTurma'].unique():
+        subset = result_df[result_df['SituacaoAlunoTurma'] == situacao]
+        plt.plot(subset['ano'], subset['count'], label=situacao)
 
-st.pyplot(fig)
+    plt.xlabel('Ano')
+    plt.ylabel('Número de Alunos')
+    plt.title('Distribuição dos Desistentes ao Longo dos Anos')
+    plt.legend()
+    plt.grid(True)
 
-# Título gráfico - Tendências de Desistentes ao Longo dos Anos
-st.write("### Tendências de Desistentes ao Longo dos Anos")
+    st.pyplot(fig)
 
-# Análise de tendências
-pivot_df = result_df.pivot(index='ano', columns='SituacaoAlunoTurma', values='count')
+    # Título gráfico - Tendências de Desistentes ao Longo dos Anos
+    st.write("### Tendências de Desistentes ao Longo dos Anos")
 
-fig, ax = plt.subplots(figsize=(12, 8))
-pivot_df.plot(kind='bar', stacked=True, ax=ax)
+    # Análise de tendências
+    pivot_df = result_df.pivot(index='ano', columns='SituacaoAlunoTurma', values='count')
 
-plt.xlabel('Ano')
-plt.ylabel('Número de Alunos')
-plt.title('Tendências de Desistentes ao Longo dos Anos')
-plt.legend(title='Situação do Aluno')
-plt.grid(True)
+    fig, ax = plt.subplots(figsize=(12, 8))
+    pivot_df.plot(kind='bar', stacked=True, ax=ax)
 
-st.pyplot(fig)
+    plt.xlabel('Ano')
+    plt.ylabel('Número de Alunos')
+    plt.title('Tendências de Desistentes ao Longo dos Anos')
+    plt.legend(title='Situação do Aluno')
+    plt.grid(True)
 
-# Título gráfico - Comparação de Desistentes Entre os Anos
-st.write("### Comparação de Desistentes Entre os Anos")
+    st.pyplot(fig)
 
-# Comparação entre anos
-fig = plt.figure(figsize=(12, 8))
-result_df.groupby('ano')['count'].sum().plot(kind='bar')
+    # Título gráfico - Comparação de Desistentes Entre os Anos
+    st.write("### Comparação de Desistentes Entre os Anos")
 
-plt.xlabel('Ano')
-plt.ylabel('Total de Desistentes')
-plt.title('Comparação de Desistentes Entre os Anos')
-plt.grid(True)
+    # Comparação entre anos
+    fig = plt.figure(figsize=(12, 8))
+    result_df.groupby('ano')['count'].sum().plot(kind='bar')
 
-st.pyplot(fig)
+    plt.xlabel('Ano')
+    plt.ylabel('Total de Desistentes')
+    plt.title('Comparação de Desistentes Entre os Anos')
+    plt.grid(True)
 
-# Defina a consulta SQL para a view
-query = 'SELECT * FROM magic_steps.vw_aluno_obs'
+    st.pyplot(fig)
 
-# Execute a consulta e carregue os resultados em um DataFrame
-df = pd.read_sql(query, engine)
+    # Defina a consulta SQL para a view
+    query = 'SELECT * FROM magic_steps.vw_aluno_obs'
 
-# Processar os dados para distribuição de gênero e raça
-gender_distribution = df['Sexo'].value_counts()
-race_distribution = df['CorRaca'].value_counts()
+    # Execute a consulta e carregue os resultados em um DataFrame
+    df = pd.read_sql(query, engine)
 
-# Processar os dados para motivos de inativação
-inactivation_reasons = df['MotivoInativacao'].value_counts()
+    # Processar os dados para distribuição de gênero e raça
+    gender_distribution = df['Sexo'].value_counts()
+    race_distribution = df['CorRaca'].value_counts()
 
-# Título gráfico - Distribuição de Gênero dos Alunos
-st.write("### Distribuição de Gênero dos Alunos")
+    # Processar os dados para motivos de inativação
+    inactivation_reasons = df['MotivoInativacao'].value_counts()
 
-# Plotar a distribuição de gênero
-fig = plt.figure(figsize=(10, 5))
-gender_distribution.plot(kind='bar')
-plt.title('Distribuição de Gênero dos Alunos')
-plt.xlabel('Gênero')
-plt.ylabel('Número de Alunos')
-plt.xticks(rotation=0)
+    # Título gráfico - Distribuição de Gênero dos Alunos
+    st.write("### Distribuição de Gênero dos Alunos")
 
-st.pyplot(fig)
+    # Plotar a distribuição de gênero
+    fig = plt.figure(figsize=(10, 5))
+    gender_distribution.plot(kind='bar')
+    plt.title('Distribuição de Gênero dos Alunos')
+    plt.xlabel('Gênero')
+    plt.ylabel('Número de Alunos')
+    plt.xticks(rotation=0)
 
-st.write("A distribuição de gênero entre os alunos parece ser equilibrada, com uma representação significativa tanto de alunos do sexo masculino quanto do sexo feminino.")
+    st.pyplot(fig)
 
-# Título gráfico - Distribuição de Cor/Raça dos Alunos
-st.write("### Distribuição de Cor/Raça dos Alunos")
+    st.write("A distribuição de gênero entre os alunos parece ser equilibrada, com uma representação significativa tanto de alunos do sexo masculino quanto do sexo feminino.")
 
-# Plotar a distribuição de raça
-fig = plt.figure(figsize=(10, 5))
-race_distribution.plot(kind='bar')
-plt.title('Distribuição de Cor/Raça dos Alunos')
-plt.xlabel('Cor/Raça')
-plt.ylabel('Número de Alunos')
-plt.xticks(rotation=0)
+    # Título gráfico - Distribuição de Cor/Raça dos Alunos
+    st.write("### Distribuição de Cor/Raça dos Alunos")
 
-st.pyplot(fig)
+    # Plotar a distribuição de raça
+    fig = plt.figure(figsize=(10, 5))
+    race_distribution.plot(kind='bar')
+    plt.title('Distribuição de Cor/Raça dos Alunos')
+    plt.xlabel('Cor/Raça')
+    plt.ylabel('Número de Alunos')
+    plt.xticks(rotation=0)
 
-st.write("A maioria dos alunos se identifica com uma cor/raça específica representada pelo código B no gráfico, o que pode indicar a predominância de um grupo racial na amostra.")
+    st.pyplot(fig)
 
-# Título gráfico - Motivos de Inativação dos Alunos
-st.write("### Motivos de Inativação dos Alunos")
+    st.write("A maioria dos alunos se identifica com uma cor/raça específica representada pelo código B no gráfico, o que pode indicar a predominância de um grupo racial na amostra.")
 
-# Plotar os motivos de inativação
-fig = plt.figure(figsize=(12, 6))
-inactivation_reasons.plot(kind='bar')
-plt.title('Motivos de Inativação dos Alunos')
-plt.xlabel('Motivo de Inativação')
-plt.ylabel('Número de Alunos')
-plt.xticks(rotation=45, ha='right')
+    # Título gráfico - Motivos de Inativação dos Alunos
+    st.write("### Motivos de Inativação dos Alunos")
 
-st.pyplot(fig)
+    # Plotar os motivos de inativação
+    fig = plt.figure(figsize=(12, 6))
+    inactivation_reasons.plot(kind='bar')
+    plt.title('Motivos de Inativação dos Alunos')
+    plt.xlabel('Motivo de Inativação')
+    plt.ylabel('Número de Alunos')
+    plt.xticks(rotation=45, ha='right')
 
-st.write("O motivo mais comum para a inativação dos alunos é Falta de retorno às nossas tentativas de contato, seguido por Conflito com horário escolar / período integral. Isso sugere que a comunicação e a compatibilidade de horários são áreas críticas que precisam de atenção.")
+    st.pyplot(fig)
 
-# Título gráfico - Situações dos Alunos nas Turmas
-st.write("### Situações dos Alunos nas Turmas")
+    st.write("O motivo mais comum para a inativação dos alunos é Falta de retorno às nossas tentativas de contato, seguido por Conflito com horário escolar / período integral. Isso sugere que a comunicação e a compatibilidade de horários são áreas críticas que precisam de atenção.")
 
-# Analisando as situações dos alunos nas aulas
-student_situations = df['IdSituacaoAlunoTurma'].value_counts()
+    # Título gráfico - Situações dos Alunos nas Turmas
+    st.write("### Situações dos Alunos nas Turmas")
 
-# Plotar a distribuição das situações dos alunos nas aulas
-fig = plt.figure(figsize=(10, 5))
-student_situations.plot(kind='bar')
-plt.title('Situações dos Alunos nas Turmas')
-plt.xlabel('ID da Situação do Aluno na Turma')
-plt.ylabel('Número de Alunos')
-plt.xticks(rotation=0)
+    # Analisando as situações dos alunos nas aulas
+    student_situations = df['IdSituacaoAlunoTurma'].value_counts()
 
-st.pyplot(fig)
+    # Plotar a distribuição das situações dos alunos nas aulas
+    fig = plt.figure(figsize=(10, 5))
+    student_situations.plot(kind='bar')
+    plt.title('Situações dos Alunos nas Turmas')
+    plt.xlabel('ID da Situação do Aluno na Turma')
+    plt.ylabel('Número de Alunos')
+    plt.xticks(rotation=0)
 
-# Verificando se há códigos de situação específicos com os comentários, se disponíveis
-unique_situations_with_comments = df[['IdSituacaoAlunoTurma', 'ComentarioInativacao']].dropna().drop_duplicates()
+    st.pyplot(fig)
 
-unique_situations_with_comments.head()
+    # Verificando se há códigos de situação específicos com os comentários, se disponíveis
+    unique_situations_with_comments = df[['IdSituacaoAlunoTurma', 'ComentarioInativacao']].dropna().drop_duplicates()
 
-st.write("**A análise das situações dos alunos nas turmas revela o seguinte:**")
+    unique_situations_with_comments.head()
 
-st.write("**Distribuição das Situações:**")
+    st.write("**A análise das situações dos alunos nas turmas revela o seguinte:**")
 
-st.write("A maioria dos alunos está associada a um único código de situação, que é o 14. Esse código representa uma categoria comum de situação dos alunos em suas respectivas turmas.")
+    st.write("**Distribuição das Situações:**")
 
-st.write("**Comentários Associados:**")
+    st.write("A maioria dos alunos está associada a um único código de situação, que é o 14. Esse código representa uma categoria comum de situação dos alunos em suas respectivas turmas.")
 
-st.write("Para algumas situações, existem comentários adicionais que fornecem contexto. Por exemplo:")
+    st.write("**Comentários Associados:**")
 
-st.write("Situação 14 está associada a comentários sobre Retorno das aulas na escola para o presencial e Falta de condições financeiras para o transporte.")
+    st.write("Para algumas situações, existem comentários adicionais que fornecem contexto. Por exemplo:")
 
-st.write("Situação 19 tem comentários como Alfa N - 1N e Vide ocorrência, indicando reavaliações ou referências a outras ocorrências.")
+    st.write("Situação 14 está associada a comentários sobre Retorno das aulas na escola para o presencial e Falta de condições financeiras para o transporte.")
 
-st.write("Essas informações podem ser úteis para entender melhor as razões por trás das situações dos alunos nas turmas e ajudar a identificar áreas onde intervenções ou suporte adicional podem ser necessários.")
+    st.write("Situação 19 tem comentários como Alfa N - 1N e Vide ocorrência, indicando reavaliações ou referências a outras ocorrências.")
 
-# Comparando as situações dos alunos com dados demográficos: gênero e raça.
-situation_gender = df.groupby(['IdSituacaoAlunoTurma', 'Sexo']).size().unstack().fillna(0)
-situation_race = df.groupby(['IdSituacaoAlunoTurma', 'CorRaca']).size().unstack().fillna(0)
+    st.write("Essas informações podem ser úteis para entender melhor as razões por trás das situações dos alunos nas turmas e ajudar a identificar áreas onde intervenções ou suporte adicional podem ser necessários.")
 
-# Título gráfico - Situações dos Alunos nas Turmas por Gênero
-st.write("### Situações dos Alunos nas Turmas por Gênero")
+    # Comparando as situações dos alunos com dados demográficos: gênero e raça.
+    situation_gender = df.groupby(['IdSituacaoAlunoTurma', 'Sexo']).size().unstack().fillna(0)
+    situation_race = df.groupby(['IdSituacaoAlunoTurma', 'CorRaca']).size().unstack().fillna(0)
 
-# Plotar a comparação entre as situações dos alunos e o gênero
-fig, ax = plt.subplots(figsize=(12, 8))
-situation_gender.plot(kind='bar', stacked=True, ax=ax)
-plt.title('Situações dos Alunos nas Turmas por Gênero')
-plt.xlabel('ID da Situação do Aluno na Turma')
-plt.ylabel('Número de Alunos')
-plt.xticks(rotation=0)
-plt.legend(title='Gênero')
+    # Título gráfico - Situações dos Alunos nas Turmas por Gênero
+    st.write("### Situações dos Alunos nas Turmas por Gênero")
 
-st.pyplot(fig)
+    # Plotar a comparação entre as situações dos alunos e o gênero
+    fig, ax = plt.subplots(figsize=(12, 8))
+    situation_gender.plot(kind='bar', stacked=True, ax=ax)
+    plt.title('Situações dos Alunos nas Turmas por Gênero')
+    plt.xlabel('ID da Situação do Aluno na Turma')
+    plt.ylabel('Número de Alunos')
+    plt.xticks(rotation=0)
+    plt.legend(title='Gênero')
 
-# Título gráfico - Situações dos Alunos nas Turmas por Cor/Raça
-st.write("### Situações dos Alunos nas Turmas por Cor/Raça")
+    st.pyplot(fig)
 
-# Plotar a comparação entre as situações dos alunos e a raça
-fig, ax = plt.subplots(figsize=(12, 8))
-situation_race.plot(kind='bar', stacked=True, ax=ax)
-plt.title('Situações dos Alunos nas Turmas por Cor/Raça')
-plt.xlabel('ID da Situação do Aluno na Turma')
-plt.ylabel('Número de Alunos')
-plt.xticks(rotation=0)
-plt.legend(title='Cor/Raça')
+    # Título gráfico - Situações dos Alunos nas Turmas por Cor/Raça
+    st.write("### Situações dos Alunos nas Turmas por Cor/Raça")
 
-st.pyplot(fig)
+    # Plotar a comparação entre as situações dos alunos e a raça
+    fig, ax = plt.subplots(figsize=(12, 8))
+    situation_race.plot(kind='bar', stacked=True, ax=ax)
+    plt.title('Situações dos Alunos nas Turmas por Cor/Raça')
+    plt.xlabel('ID da Situação do Aluno na Turma')
+    plt.ylabel('Número de Alunos')
+    plt.xticks(rotation=0)
+    plt.legend(title='Cor/Raça')
 
-st.write("**A análise das situações dos alunos nas turmas em relação aos dados demográficos de gênero e cor/raça revela o seguinte:**")
+    st.pyplot(fig)
 
-st.write("**Situações por Gênero:**")
+    st.write("**A análise das situações dos alunos nas turmas em relação aos dados demográficos de gênero e cor/raça revela o seguinte:**")
 
-st.write("Para a situação mais comum, código 14, há um equilíbrio na distribuição entre alunos do sexo masculino e feminino.")
+    st.write("**Situações por Gênero:**")
 
-st.write("Para outras situações, como o código 19, a distribuição também parece relativamente equilibrada, indicando que as questões que afetam as situações dos alunos não são fortemente influenciadas pelo gênero.")
+    st.write("Para a situação mais comum, código 14, há um equilíbrio na distribuição entre alunos do sexo masculino e feminino.")
 
-st.write("**Situações por Cor/Raça:**")
+    st.write("Para outras situações, como o código 19, a distribuição também parece relativamente equilibrada, indicando que as questões que afetam as situações dos alunos não são fortemente influenciadas pelo gênero.")
 
-st.write("A maioria das situações, especialmente o código 14, está associada ao grupo racial predominante, código B.")
+    st.write("**Situações por Cor/Raça:**")
 
-st.write("Isso reflete a distribuição geral de raça/cor no conjunto de dados, sem grandes desvios em termos de situação acadêmica.")
+    st.write("A maioria das situações, especialmente o código 14, está associada ao grupo racial predominante, código B.")
+
+    st.write("Isso reflete a distribuição geral de raça/cor no conjunto de dados, sem grandes desvios em termos de situação acadêmica.")
+
+# -----------------------------------------------------------------------------------
+
+# tab2 - Conclusão
+with tab2:
+    st.write("Com as análises, podemos concluir que a Passos Mágicos...")
+
+# -----------------------------------------------------------------------------------
+
+# tab3 - Sugestão
+with tab3:
+    st.write("Sugerimos que a Passos Mágicos...")
