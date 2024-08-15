@@ -22,8 +22,8 @@ tab1, tab2, tab3 = st.tabs(
 
 with tab1:
 
-    model = joblib.load('pages/model.pkl')
-    scaler = joblib.load('pages/scaler.pkl')
+    model = joblib.load('model.pkl')
+    scaler = joblib.load('scaler.pkl')
 
     def prever_evasao(idade, notafase, numerofase, diasmatriculado):
         novo_dado = pd.DataFrame({
