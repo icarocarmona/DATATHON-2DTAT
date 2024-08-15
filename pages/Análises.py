@@ -66,7 +66,7 @@ with tab1:
     # Exibindo o gráfico no Streamlit
     st.pyplot(fig)
 
-    # Título gráfico - Desempenho Médio por Disciplina
+    # Título gráfico - DDesempenho Médio por Disciplina
     st.write("### Desempenho Médio por Disciplina")
 
     # Calcule a média de notas por disciplina
