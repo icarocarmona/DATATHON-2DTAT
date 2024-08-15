@@ -115,6 +115,8 @@ with tab1:
 
     # Ordenar por ano em ordem decrescente
     result_df = grouped_df.sort_values(by='ano', ascending=False)
+    print(result_df)
+    
 
     # Plotar a distribuição dos alunos por situação ao longo dos anos
     fig = plt.figure(figsize=(12, 8))
