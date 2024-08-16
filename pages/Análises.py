@@ -407,6 +407,18 @@ with tab2:
 # -----------------------------------------------------------------------------------
 
 # tab3 - Sugestão
+# Motivos de Inativação
+st.header("Motivos de Inativação")
+st.write("""
+Os principais motivos identificados para a inativação dos alunos foram:
+
+1. **Mudou de bairro/cidade/distância:** Mudanças de residência que dificultam o acesso à instituição.
+2. **Outras prioridades/trabalho:** Este é o motivo mais frequente, indicando que muitos estudantes estão priorizando o trabalho ou outras atividades sobre os estudos.
+3. **Sem adaptação ao curso:** Alguns alunos não se ajustaram bem ao curso ou à instituição.
+4. **Desistência por motivos pessoais:** Questões pessoais significativas que levaram alguns alunos a deixar o curso.
+5. **Problemas financeiros:** Dificuldades econômicas que têm um impacto considerável na continuidade dos estudos.
+""")
+
 with tab3:
     st.header("Sugestões para a Associação Passos Mágicos")
 st.write("""
