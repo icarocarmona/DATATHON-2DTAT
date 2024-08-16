@@ -1,8 +1,36 @@
 import streamlit as st
 
-st.set_page_config(page_title="Arquitetura do Projeto", page_icon=":gear:")
+# Title da página
+st.set_page_config(
+    page_title="Passos Mágicos | DataThon - Grupo 26",
+    page_icon="🪄",
+    initial_sidebar_state="expanded",
+    layout= 'wide'
+)
 
-st.title("Arquitetura do Projeto :gear:")
+# Páginas
+cols = st.columns(6, gap="large")
+with cols[0]:
+    st.image("https://passosmagicos.org.br/wp-content/uploads/2020/10/Passos-magicos-icon-cor.png")
+with cols[1]:
+    if st.button("Home"):
+        st.switch_page("Home.py")
+with cols[2]:
+    if st.button("Passos Mágicos"):
+        st.switch_page("pages/A Ong Passos Mágicos.py")
+with cols[3]:
+    if st.button("Análises"):
+        st.switch_page("pages/Análises.py")
+with cols[4]:
+    if st.button("Arquitetura"):
+        st.switch_page("pages/Arquitetura.py")
+with cols[5]:
+    if st.button("Modelo"):
+        st.switch_page("pages/Modelo.py")
+
+# Título Análises
+st.header(':gear: Arquitetura do Projeto', divider='rainbow')
+
 st.image("imagens/Arquitetura.png", caption="Arquitetura do projeto")
 st.markdown("""
 > Neste projeto, decidimos utilizar um banco de dados para facilitar a modelagem e limpeza dos dados, além de trabalhar em equipe de forma mais ágil e colaborativa.

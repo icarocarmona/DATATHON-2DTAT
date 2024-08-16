@@ -23,6 +23,12 @@ with cols[2]:
 with cols[3]:
     if st.button("Análises"):
         st.switch_page("pages/Análises.py")
+with cols[4]:
+    if st.button("Arquitetura"):
+        st.switch_page("pages/Arquitetura.py")
+with cols[5]:
+    if st.button("Modelo"):
+        st.switch_page("pages/Modelo.py")
 
 # Apresentação e integrantes
 st.header('🪄 DataThon - Passos Mágicos | Grupo 26', divider='rainbow')
