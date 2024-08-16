@@ -98,7 +98,10 @@ def df_situacaoalunoturma_pivot(result_df):
 
 # ------- Início Análises -------
 
-  
+   st.write("""Na próxima seção, você encontrará as análises exploratórias, gráficos, e uma Word Cloud que ilustram de forma visual e intuitiva as informações coletadas na 
+   base de dados disponibilizada pela Passos Mágicos. Esses recursos foram desenvolvidos para facilitar a análise e a compreensão dos dados, permitindo insights 
+   claros e objetivos sobre os padrões e tendências que influenciam a evasão dos alunos.""")
+
 # Criando as abas
 tab1, tab2, tab3 = st.tabs(["Gráficos", "Conclusão", "Sugestão"])
 
@@ -154,7 +157,7 @@ with tab1:
     - **Problemas financeiros:** Dificuldades econômicas que afetam a continuidade dos estudos.
     """)
 
-    st.write("Este gráfico ajuda a entender melhor os desafios enfrentados pelos alunos e pode auxiliar na formulação de estratégias para reduzir as taxas de inativação, como suporte financeiro, aconselhamento acadêmico e ajustes curriculares.")
+    st.write("""Este gráfico ajuda a entender melhor os desafios enfrentados pelos alunos e pode auxiliar na formulação de estratégias para reduzir as taxas de inativação, como suporte financeiro, aconselhamento acadêmico e ajustes curriculares.""")
 
     # Tabela 3 - Relação Aluno x Turma
 
@@ -186,7 +189,7 @@ with tab1:
     # Mostrar o resultado como uma tabela no Streamlit
     st.dataframe(result_df)
 
-    st.write("Um aluno pode estar vinculado a mais de uma turma simultaneamente, o que significa que ele pode apresentar diferentes situações acadêmicas em cada uma. Por exemplo, um aluno pode ter sido aprovado em uma turma e, ao mesmo tempo, ter desistido de outra. Isso reflete a possibilidade de múltiplas situações para um mesmo aluno em diferentes turmas.")
+    st.write("""Um aluno pode estar vinculado a mais de uma turma simultaneamente, o que significa que ele pode apresentar diferentes situações acadêmicas em cada uma. Por exemplo, um aluno pode ter sido aprovado em uma turma e, ao mesmo tempo, ter desistido de outra. Isso reflete a possibilidade de múltiplas situações para um mesmo aluno em diferentes turmas.""")
 
     # Gráfico 4 - Tendências de Situação dos Alunos ao Longo dos Anos
     st.write("### Tendências de Situação dos Alunos ao Longo dos Anos")
@@ -240,7 +243,7 @@ with tab1:
     st.write("### Nuvem de Palavras - Desistente")
 
 
-     st.write("Utilizamos a Word Cloud para analisar as observações feitas pelos professores e avaliadores sobre os alunos desistentes com o objetivo de identificar de maneira rápida e visual os termos e expressões mais recorrentes nesses relatos. A Word Cloud é uma ferramenta eficaz para condensar grandes volumes de texto, destacando as palavras que aparecem com maior frequência. Isso nos permite captar tendências e padrões nas observações dos professores, fornecendo insights valiosos sobre os motivos e contextos que podem estar contribuindo para a evasão. Ao visualizar essas palavras em destaque, podemos direcionar melhor as ações corretivas e o suporte necessário para reduzir a taxa de desistência dos alunos.")
+     st.write("""Utilizamos a Word Cloud para analisar as observações feitas pelos professores e avaliadores sobre os alunos desistentes com o objetivo de identificar de maneira rápida e visual os termos e expressões mais recorrentes nesses relatos. A Word Cloud é uma ferramenta eficaz para condensar grandes volumes de texto, destacando as palavras que aparecem com maior frequência. Isso nos permite captar tendências e padrões nas observações dos professores, fornecendo insights valiosos sobre os motivos e contextos que podem estar contribuindo para a evasão. Ao visualizar essas palavras em destaque, podemos direcionar melhor as ações corretivas e o suporte necessário para reduzir a taxa de desistência dos alunos.""")
 
     # Filtrar registros onde SituacaoAlunoTurma é 'Desistente'
     text = text_observacao_registro(df_v2)
