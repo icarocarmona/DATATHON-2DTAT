@@ -311,17 +311,17 @@ with tab1:
     st.pyplot(fig)
 
    # Insights sobre Mudanças de Situação ao Longo do Tempo
-st.header("Insights sobre Mudanças de Situação ao Longo do Tempo")
+    st.header("Insights sobre Mudanças de Situação ao Longo do Tempo")
 
-st.write("""
-O gráfico acima ilustra a quantidade de mudanças de situação ao longo do tempo, com base na coluna *DataOcorrencia*:
+    st.write("""
+    O gráfico acima ilustra a quantidade de mudanças de situação ao longo do tempo, com base na coluna *DataOcorrencia*:
 
-- **Flutuações Regulares:** O gráfico revela picos e quedas na quantidade de mudanças de situação, que podem estar relacionados a períodos críticos do calendário acadêmico, como o final de semestres ou do ano letivo.
+    - **Flutuações Regulares:** O gráfico revela picos e quedas na quantidade de mudanças de situação, que podem estar relacionados a períodos críticos do calendário acadêmico, como o final de semestres ou do ano letivo.
 
-- **Tendências Temporais:** Certos períodos do ano apresentam um maior número de mudanças de situação, possivelmente influenciados por fatores externos, como feriados ou processos administrativos.
+    - **Tendências Temporais:** Certos períodos do ano apresentam um maior número de mudanças de situação, possivelmente influenciados por fatores externos, como feriados ou processos administrativos.
 
-- **Intervenções Potenciais:** Identificar esses períodos críticos pode ser essencial para implementar intervenções direcionadas, como campanhas de retenção ou suporte adicional para alunos em risco de desistência.
-""")
+    - **Intervenções Potenciais:** Identificar esses períodos críticos pode ser essencial para implementar intervenções direcionadas, como campanhas de retenção ou suporte adicional para alunos em risco de desistência.
+    """)
 
 
 # -----------------------------------------------------------------------------------
