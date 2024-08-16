@@ -402,10 +402,33 @@ with tab1:
 
 # tab2 - Conclusão
 with tab2:
-    st.write("Com as análises, podemos concluir que a Passos Mágicos...")
+    st.write("Com as análises, podemos concluir que a Passos Mágicos possui fatores importantes que contribuem para a desistência dos alunos. A implementação de estratégias nas áreas de apoio financeiro, flexibilidade nos horários, suporte psicopedagógico, e envolvimento comunitário pode reduzir a taxa de evasão. Recomendamos que a Associação adote medidas para fortalecer o suporte oferecido aos alunos, garantindo maior retenção e sucesso acadêmico. O compromisso contínuo com a inovação e o apoio individualizado será essencial para transformar ainda mais a vida de crianças e jovens de baixa renda, assegurando-lhes melhores oportunidades de futuro.")
 
 # -----------------------------------------------------------------------------------
 
 # tab3 - Sugestão
 with tab3:
-    st.write("Sugerimos que a Passos Mágicos...")
+    st.header("Sugestões para a Associação Passos Mágicos")
+st.write("""
+Para reduzir a evasão e melhorar a retenção dos alunos, recomendamos as seguintes ações:
+
+1. **Programas de Apoio Financeiro:**
+   - Criação de bolsas de estudo e subsídios para alunos em situação de vulnerabilidade econômica.
+   - Estabelecimento de um fundo de emergência para auxiliar estudantes que enfrentam crises financeiras temporárias.
+
+2. **Flexibilidade nos Horários:**
+   - Oferecer cursos noturnos e de fim de semana.
+   - Expandir o acesso a aulas e materiais online (EAD).
+
+3. **Suporte Psicopedagógico:**
+   - Implementar um programa de mentoria e aconselhamento.
+   - Disponibilizar acompanhamento psicológico e pedagógico.
+
+4. **Envolvimento Familiar e Comunitário:**
+   - Promover programas de envolvimento dos pais e atividades comunitárias.
+   - Estabelecer parcerias com comunidades locais.
+
+5. **Diversificação de Atividades e Currículo:**
+   - Oferecer atividades extracurriculares atraentes.
+   - Customizar o currículo para atender às necessidades individuais dos alunos.
+""")
