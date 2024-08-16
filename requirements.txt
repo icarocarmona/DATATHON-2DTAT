@@ -6,3 +6,4 @@ matplotlib
 nbconvert
 joblib
 scikit-learn
+wordcloud

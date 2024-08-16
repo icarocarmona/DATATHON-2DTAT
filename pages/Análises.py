@@ -13,13 +13,14 @@ st.set_page_config(
     page_title="Passos Mágicos | DataThon - Grupo 26",
     page_icon="🪄",
     initial_sidebar_state="expanded",
-    layout= 'wide'
+    layout='wide'
 )
 
 # Páginas
 cols = st.columns(6, gap="large")
 with cols[0]:
-    st.image("https://passosmagicos.org.br/wp-content/uploads/2020/10/Passos-magicos-icon-cor.png")
+    st.image(
+        "https://passosmagicos.org.br/wp-content/uploads/2020/10/Passos-magicos-icon-cor.png")
 with cols[1]:
     if st.button("Home"):
         st.switch_page("Home.py")
@@ -40,6 +41,9 @@ with cols[5]:
 st.header('🪄 Análise Exploratória', divider='rainbow')
 
 # Criando a conexão com o BD
+
+
+@st.cache_resource
 def create_conn():
     # Defina os parâmetros de conexão
     db_user = st.secrets["DB_USER"]
@@ -59,21 +63,65 @@ def create_conn():
 engine = create_conn()
 # Fim conexão BD
 
+
+@st.cache_data
+def read_invativos_full():
+    query = 'SELECT * FROM magic_steps.inativos_full'
+    return pd.read_sql(query, engine)
+
+
+@st.cache_data
+def read_situacaoalunoturma():
+    return pd.read_sql_table(
+        'tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
+
+
+@st.cache_data
+def read_alunoturma():
+    return pd.read_sql_table(
+        'tbalunoturma', con=engine, schema='magic_steps')
+
+
+@st.cache_data
+def read_aluno_obs_v2():
+    query = 'SELECT * FROM magic_steps.vw_aluno_obs_v2'
+    df_v2 = pd.read_sql(query, engine)
+    return df_v2
+
+
+@st.cache_data
+def df_situacaoalunoturma_pivot(result_df):
+    pivot_df = result_df.pivot(
+        index='ano', columns='SituacaoAlunoTurma', values='count')
+
+    return pivot_df
+
 # ------- Início Análises -------
+
 
 # Criando as abas
 tab1, tab2, tab3 = st.tabs(["Gráficos", "Conclusão", "Sugestão"])
 
 # tab1 - Gráficos
+
+
+@st.cache_data
+def text_observacao_registro(df_v2):
+    desistente_records = df_v2[df_v2['SituacaoAlunoTurma'] == 'Desistente']
+
+    # Concatenar textos da coluna ObservacaoRegistro
+    text = ' '.join(desistente_records['ObservacaoRegistro'].dropna())
+    return text
+
+
 with tab1:
     # Tabela 1 - Defina a consulta SQL para a view
-    query = 'SELECT * FROM magic_steps.inativos_full'
 
     # Execute a consulta e carregue os resultados em um DataFrame
-    df_inativos_full = pd.read_sql(query, engine)
+    df_inativos_full = read_invativos_full()
 
     # Mostre as primeiras linhas do DataFrame em uma tabela no Streamlit
-    #st.dataframe(df_inativos_full.head())
+    # st.dataframe(df_inativos_full.head())
 
     # Se quiser mostrar toda a tabela:
     st.dataframe(df_inativos_full)
@@ -93,7 +141,7 @@ with tab1:
     plt.ylabel('Número de Alunos')
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
-    
+
     st.pyplot(fig)
 
     st.write("**Motivos de inativação entre os alunos:**")
@@ -113,21 +161,24 @@ with tab1:
     st.write("### Relação Aluno x Turma")
 
     # Ler as tabelas do PostgreSQL para dataframes pandas
-    tbsituacaoalunoturma_m = pd.read_sql_table('tbsituacaoalunoturma_m', con=engine, schema='magic_steps')
-    tbalunoturma = pd.read_sql_table('tbalunoturma', con=engine, schema='magic_steps')
+    tbsituacaoalunoturma_m = read_situacaoalunoturma()
+    tbalunoturma = read_alunoturma()
 
     # Fazer o join entre os dataframes
-    merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma, left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
+    merged_df = pd.merge(tbsituacaoalunoturma_m, tbalunoturma,
+                         left_on='IdSituacaoAlunoTurma', right_on='IdSituacaoAlunoTurma')
 
     # Filtrar os dados conforme a condição especificada
     filtered_df = merged_df[merged_df['SituacaoSistema'] != 'P']
 
     # Converter a coluna de data para datetime e extrair o ano
-    filtered_df['DataSituacaoAtivo'] = pd.to_datetime(filtered_df['DataSituacaoAtivo'])
+    filtered_df['DataSituacaoAtivo'] = pd.to_datetime(
+        filtered_df['DataSituacaoAtivo'])
     filtered_df['ano'] = filtered_df['DataSituacaoAtivo'].dt.year
 
     # Agrupar pelos campos necessários e contar
-    grouped_df = filtered_df.groupby(['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
+    grouped_df = filtered_df.groupby(
+        ['SituacaoAlunoTurma', 'ano']).size().reset_index(name='count')
 
     # Ordenar por ano em ordem decrescente
     result_df = grouped_df.sort_values(by='ano', ascending=False)
@@ -144,7 +195,7 @@ with tab1:
     fig, ax = plt.subplots(figsize=(12, 8))
 
     # Criar o gráfico de barras empilhadas usando o dataframe pivotado
-    pivot_df = result_df.pivot(index='ano', columns='SituacaoAlunoTurma', values='count')
+    pivot_df = df_situacaoalunoturma_pivot(result_df)
     pivot_df.plot(kind='bar', stacked=True, ax=ax)
 
     # Adicionar rótulos e título
@@ -159,13 +210,10 @@ with tab1:
 
     st.pyplot(fig)
 
-    # Tabela 5 - 
+    # Tabela 5 -
 
     # Defina a consulta SQL para a view
-    query = 'SELECT * FROM magic_steps.vw_aluno_obs_v2'
-
-    # Execute a consulta e carregue os resultados em um DataFrame
-    df_v2 = pd.read_sql(query, engine)
+    df_v2 = read_aluno_obs_v2()
 
     # Mostrar as primeiras linhas do DataFrame no Streamlit
     st.dataframe(df_v2.head())
@@ -173,7 +221,7 @@ with tab1:
     # Se você quiser exibir todo o DataFrame:
     # st.dataframe(df_v2)
 
-    # Tabela 6 - 
+    # Tabela 6 -
 
     # Defina a consulta SQL para a view
     # query = 'SELECT * FROM magic_steps.vw_aluno_obs_v2'
@@ -192,13 +240,11 @@ with tab1:
     st.write("### Nuvem de Palavras - Desistente")
 
     # Filtrar registros onde SituacaoAlunoTurma é 'Desistente'
-    desistente_records = df_v2[df_v2['SituacaoAlunoTurma'] == 'Desistente']
-
-    # Concatenar textos da coluna ObservacaoRegistro
-    text = ' '.join(desistente_records['ObservacaoRegistro'].dropna())
+    text = text_observacao_registro(df_v2)
 
     # Gerar a nuvem de palavras
-    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
+    wordcloud = WordCloud(width=800, height=400,
+                          background_color='white').generate(text)
 
     # Configurar o gráfico para exibir a nuvem de palavras
     fig, ax = plt.subplots(figsize=(10, 5))
@@ -235,11 +281,14 @@ with tab1:
     st.write("### Mudanças de Situação ao Longo do Tempo (DataOcorrencia)")
 
     # Converter as colunas de data para o formato datetime
-    df_v2['DataOcorrencia'] = pd.to_datetime(df_v2['DataOcorrencia'], errors='coerce')
-    df_v2['DataInclusao'] = pd.to_datetime(df_v2['DataInclusao'], errors='coerce')
+    df_v2['DataOcorrencia'] = pd.to_datetime(
+        df_v2['DataOcorrencia'], errors='coerce')
+    df_v2['DataInclusao'] = pd.to_datetime(
+        df_v2['DataInclusao'], errors='coerce')
 
     # Contar a quantidade de mudanças de situação ao longo do tempo usando 'DataOcorrencia'
-    ocorrencia_counts = df_v2.groupby(df_v2['DataOcorrencia'].dt.to_period('M'))['SituacaoAlunoTurma'].count()
+    ocorrencia_counts = df_v2.groupby(df_v2['DataOcorrencia'].dt.to_period('M'))[
+        'SituacaoAlunoTurma'].count()
 
     # Criar gráfico de linha para visualizar as mudanças de situação ao longo do tempo
     fig = plt.figure(figsize=(12, 6))
