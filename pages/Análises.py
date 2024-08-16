@@ -408,8 +408,7 @@ with tab2:
 
 # tab3 - Sugestãoo
 with tab3:
-st.header("Motivos de Inativação")
-st.write("""
+    st.write("""
 Os principais motivos identificados para a inativação dos alunos foram:
 
 1. **Mudou de bairro/cidade/distância:** Mudanças de residência que dificultam o acesso à instituição.
