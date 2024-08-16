@@ -413,31 +413,31 @@ with tab3:
     st.write("""
 Os principais motivos identificados para a inativação dos alunos foram:
 
-1. **Mudou de bairro/cidade/distância:** Mudanças de residência que dificultam o acesso à instituição.
-2. **Outras prioridades/trabalho:** Este é o motivo mais frequente, indicando que muitos estudantes estão priorizando o trabalho ou outras atividades sobre os estudos.
-3. **Sem adaptação ao curso:** Alguns alunos não se ajustaram bem ao curso ou à instituição.
-4. **Desistência por motivos pessoais:** Questões pessoais significativas que levaram alguns alunos a deixar o curso.
-5. **Problemas financeiros:** Dificuldades econômicas que têm um impacto considerável na continuidade dos estudos.
+**Mudou de bairro/cidade/distância:** Mudanças de residência que dificultam o acesso à instituição.
+**Outras prioridades/trabalho:** Este é o motivo mais frequente, indicando que muitos estudantes estão priorizando o trabalho ou outras atividades sobre os estudos.
+**Sem adaptação ao curso:** Alguns alunos não se ajustaram bem ao curso ou à instituição.
+**Desistência por motivos pessoais:** Questões pessoais significativas que levaram alguns alunos a deixar o curso.
+**Problemas financeiros:** Dificuldades econômicas que têm um impacto considerável na continuidade dos estudos.
 
 Para reduzir a evasão e melhorar a retenção dos alunos, recomendamos as seguintes ações:
 
-1. **Programas de Apoio Financeiro:**
+**Programas de Apoio Financeiro:**
    - Criação de bolsas de estudo e subsídios para alunos em situação de vulnerabilidade econômica.
    - Estabelecimento de um fundo de emergência para auxiliar estudantes que enfrentam crises financeiras temporárias.
 
-2. **Flexibilidade nos Horários:**
+**Flexibilidade nos Horários:**
    - Oferecer cursos noturnos e de fim de semana.
    - Expandir o acesso a aulas e materiais online (EAD).
 
-3. **Suporte Psicopedagógico:**
+**Suporte Psicopedagógico:**
    - Implementar um programa de mentoria e aconselhamento.
    - Disponibilizar acompanhamento psicológico e pedagógico.
 
-4. **Envolvimento Familiar e Comunitário:**
+**Envolvimento Familiar e Comunitário:**
    - Promover programas de envolvimento dos pais e atividades comunitárias.
    - Estabelecer parcerias com comunidades locais.
 
-5. **Diversificação de Atividades e Currículo:**
+**Diversificação de Atividades e Currículo:**
    - Oferecer atividades extracurriculares atraentes.
    - Customizar o currículo para atender às necessidades individuais dos alunos.
 """)
