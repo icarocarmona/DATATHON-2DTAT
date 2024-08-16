@@ -414,9 +414,13 @@ with tab3:
 Os principais motivos identificados para a inativação dos alunos foram:
 
 **Mudou de bairro/cidade/distância:** Mudanças de residência que dificultam o acesso à instituição.
+
 **Outras prioridades/trabalho:** Este é o motivo mais frequente, indicando que muitos estudantes estão priorizando o trabalho ou outras atividades sobre os estudos.
+
 **Sem adaptação ao curso:** Alguns alunos não se ajustaram bem ao curso ou à instituição.
+
 **Desistência por motivos pessoais:** Questões pessoais significativas que levaram alguns alunos a deixar o curso.
+
 **Problemas financeiros:** Dificuldades econômicas que têm um impacto considerável na continuidade dos estudos.
 
 Para reduzir a evasão e melhorar a retenção dos alunos, recomendamos as seguintes ações:
