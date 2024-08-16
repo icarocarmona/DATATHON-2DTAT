@@ -97,7 +97,7 @@ def df_situacaoalunoturma_pivot(result_df):
     return pivot_df
 
 # ------- Início Análises -------
-
+   st.write("Na próxima seção, você encontrará as análises exploratórias, gráficos, e uma Word Cloud que ilustram de forma visual e intuitiva as informações coletadas na base de dados disponibilizada pela Passos Mágicos. Esses recursos foram desenvolvidos para facilitar a análise e a compreensão dos dados, permitindo insights claros e objetivos sobre os padrões e tendências que influenciam a evasão dos alunos.")
 
 # Criando as abas
 tab1, tab2, tab3 = st.tabs(["Gráficos", "Conclusão", "Sugestão"])
@@ -147,11 +147,11 @@ with tab1:
     st.write("**Motivos de inativação entre os alunos:**")
 
     st.markdown("""
-    - Mudou de bairro/Cidade/Distância
-    - Outras prioridades/trabalho: Este é o motivo mais frequente para a inativação dos alunos. Isso sugere que muitos estudantes estão priorizando o trabalho ou outras atividades sobre seus estudos.
-    - Sem adaptação ao curso: Outro motivo comum, indicando que alguns alunos podem não ter se ajustado bem ao curso ou à instituição.
-    - Desistência por motivos pessoais: Reflete que questões pessoais são uma razão significativa para alguns alunos deixarem o curso.
-    - Problemas financeiros: Também aparece com frequência, indicando que dificuldades econômicas têm um impacto considerável na continuidade dos estudos.
+    - **Mudança de residência:** Dificultando o acesso à instituição.
+    - **Prioridades ou trabalho:** Estudantes priorizam outras atividades sobre os estudos.
+    - **Falta de adaptação ao curso:** Dificuldade em se ajustar ao curso ou à instituição.
+    - **Motivos pessoais:** Questões pessoais que levaram à desistência.
+    - **Problemas financeiros:** Dificuldades econômicas que afetam a continuidade dos estudos.
     """)
 
     st.write("Este gráfico ajuda a entender melhor os desafios enfrentados pelos alunos e pode auxiliar na formulação de estratégias para reduzir as taxas de inativação, como suporte financeiro, aconselhamento acadêmico e ajustes curriculares.")
@@ -186,7 +186,7 @@ with tab1:
     # Mostrar o resultado como uma tabela no Streamlit
     st.dataframe(result_df)
 
-    st.write("Pode haver mais de um aluno por situação aluno turma, ou seja, um aluno pode estar em mais de um tipo de Situação.")
+    st.write("Um aluno pode estar vinculado a mais de uma turma simultaneamente, o que significa que ele pode apresentar diferentes situações acadêmicas em cada uma. Por exemplo, um aluno pode ter sido aprovado em uma turma e, ao mesmo tempo, ter desistido de outra. Isso reflete a possibilidade de múltiplas situações para um mesmo aluno em diferentes turmas.")
 
     # Gráfico 4 - Tendências de Situação dos Alunos ao Longo dos Anos
     st.write("### Tendências de Situação dos Alunos ao Longo dos Anos")
@@ -238,6 +238,9 @@ with tab1:
     # Gráfico 7 - Nuvem de palavras - Desistentes
 
     st.write("### Nuvem de Palavras - Desistente")
+
+
+     st.write("Utilizamos a Word Cloud para analisar as observações feitas pelos professores e avaliadores sobre os alunos desistentes com o objetivo de identificar de maneira rápida e visual os termos e expressões mais recorrentes nesses relatos. A Word Cloud é uma ferramenta eficaz para condensar grandes volumes de texto, destacando as palavras que aparecem com maior frequência. Isso nos permite captar tendências e padrões nas observações dos professores, fornecendo insights valiosos sobre os motivos e contextos que podem estar contribuindo para a evasão. Ao visualizar essas palavras em destaque, podemos direcionar melhor as ações corretivas e o suporte necessário para reduzir a taxa de desistência dos alunos.")
 
     # Filtrar registros onde SituacaoAlunoTurma é 'Desistente'
     text = text_observacao_registro(df_v2)
@@ -301,13 +304,18 @@ with tab1:
 
     st.pyplot(fig)
 
-    st.write("Insights sobre Mudanças de Situação ao Longo do Tempo O gráfico acima mostra a quantidade de mudanças de situação ao longo do tempo, utilizando a coluna DataOcorrencia:")
+   # Insights sobre Mudanças de Situação ao Longo do Tempo
+st.header("Insights sobre Mudanças de Situação ao Longo do Tempo")
 
-    st.write("Flutuações Regulares: É possível observar picos e vales na quantidade de mudanças de situação. Esses picos podem corresponder a períodos críticos no calendário acadêmico, como finais de semestre ou ano letivo.")
+st.write("""
+O gráfico acima ilustra a quantidade de mudanças de situação ao longo do tempo, com base na coluna *DataOcorrencia*:
 
-    st.write("Tendências Temporais: Algumas épocas do ano podem apresentar mais mudanças, o que pode estar associado a fatores externos, como feriados ou processos administrativos.")
+- **Flutuações Regulares:** O gráfico revela picos e quedas na quantidade de mudanças de situação, que podem estar relacionados a períodos críticos do calendário acadêmico, como o final de semestres ou do ano letivo.
 
-    st.write("Possíveis Intervenções: Identificar esses períodos pode ser útil para implementar intervenções direcionadas, como campanhas de retenção ou suporte adicional para alunos em risco de desistência.")
+- **Tendências Temporais:** Certos períodos do ano apresentam um maior número de mudanças de situação, possivelmente influenciados por fatores externos, como feriados ou processos administrativos.
+
+- **Intervenções Potenciais:** Identificar esses períodos críticos pode ser essencial para implementar intervenções direcionadas, como campanhas de retenção ou suporte adicional para alunos em risco de desistência.
+""")
 
 
 # -----------------------------------------------------------------------------------
