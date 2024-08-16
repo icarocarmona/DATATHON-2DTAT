@@ -402,7 +402,9 @@ with tab1:
 
 # tab2 - Conclusão
 with tab2:
-    st.write("Com as análises, podemos concluir que a Passos Mágicos possui fatores importantes que contribuem para a desistência dos alunos. A implementação de estratégias nas áreas de apoio financeiro, flexibilidade nos horários, suporte psicopedagógico, e envolvimento comunitário pode reduzir a taxa de evasão. Recomendamos que a Associação adote medidas para fortalecer o suporte oferecido aos alunos, garantindo maior retenção e sucesso acadêmico. O compromisso contínuo com a inovação e o apoio individualizado será essencial para transformar ainda mais a vida de crianças e jovens de baixa renda, assegurando-lhes melhores oportunidades de futuro.")
+    st.write("""Com as análises, podemos concluir que a Passos Mágicos possui fatores importantes que contribuem para a desistência dos alunos. 
+    A implementação de estratégias nas áreas de apoio financeiro, flexibilidade nos horários, suporte psicopedagógico, e envolvimento comunitário pode reduzir a taxa de evasão. Recomendamos que a Associação adote medidas para fortalecer o suporte oferecido aos alunos, garantindo maior retenção e sucesso acadêmico. O compromisso contínuo com a inovação e o apoio individualizado será essencial para transformar ainda mais a vida de crianças e jovens de baixa renda, assegurando-lhes melhores oportunidades de futuro.
+    """)
 
 # -----------------------------------------------------------------------------------
 
