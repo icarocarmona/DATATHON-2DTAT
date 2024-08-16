@@ -243,9 +243,9 @@ with tab1:
 
     st.write("### Nuvem de Palavras - Desistente")
 
-st.write("""
-Utilizamos a Word Cloud para analisar as observações feitas pelos professores e avaliadores sobre os alunos desistentes com o objetivo de identificar de maneira rápida e visual os termos e expressões mais recorrentes nesses relatos. A Word Cloud é uma ferramenta eficaz para condensar grandes volumes de texto, destacando as palavras que aparecem com maior frequência. Isso nos permite captar tendências e padrões nas observações dos professores, fornecendo insights valiosos sobre os motivos e contextos que podem estar contribuindo para a evasão. Ao visualizar essas palavras em destaque, podemos direcionar melhor as ações corretivas e o suporte necessário para reduzir a taxa de desistência dos alunos.
-""")
+    st.write("""
+    Utilizamos a Word Cloud para analisar as observações feitas pelos professores e avaliadores sobre os alunos desistentes com o objetivo de identificar de maneira rápida e visual os termos e expressões mais recorrentes nesses relatos. A Word Cloud é uma ferramenta eficaz para condensar grandes volumes de texto, destacando as palavras que aparecem com maior frequência. Isso nos permite captar tendências e padrões nas observações dos professores, fornecendo insights valiosos sobre os motivos e contextos que podem estar contribuindo para a evasão. Ao visualizar essas palavras em destaque, podemos direcionar melhor as ações corretivas e o suporte necessário para reduzir a taxa de desistência dos alunos.
+    """)
 
 
     # Filtrar registros onde SituacaoAlunoTurma é 'Desistente'
