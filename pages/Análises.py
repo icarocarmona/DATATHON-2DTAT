@@ -418,11 +418,7 @@ Os principais motivos identificados para a inativação dos alunos foram:
 3. **Sem adaptação ao curso:** Alguns alunos não se ajustaram bem ao curso ou à instituição.
 4. **Desistência por motivos pessoais:** Questões pessoais significativas que levaram alguns alunos a deixar o curso.
 5. **Problemas financeiros:** Dificuldades econômicas que têm um impacto considerável na continuidade dos estudos.
-""")
 
-
-    st.header("Sugestões para a Associação Passos Mágicos")
-st.write("""
 Para reduzir a evasão e melhorar a retenção dos alunos, recomendamos as seguintes ações:
 
 1. **Programas de Apoio Financeiro:**
