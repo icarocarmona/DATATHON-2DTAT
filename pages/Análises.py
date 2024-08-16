@@ -97,8 +97,8 @@ def df_situacaoalunoturma_pivot(result_df):
     return pivot_df
 
 # ------- Início Análises -------
-   st.write("Na próxima seção, você encontrará as análises exploratórias, gráficos, e uma Word Cloud que ilustram de forma visual e intuitiva as informações coletadas na base de dados disponibilizada pela Passos Mágicos. Esses recursos foram desenvolvidos para facilitar a análise e a compreensão dos dados, permitindo insights claros e objetivos sobre os padrões e tendências que influenciam a evasão dos alunos.")
 
+  
 # Criando as abas
 tab1, tab2, tab3 = st.tabs(["Gráficos", "Conclusão", "Sugestão"])
 
