@@ -415,16 +415,11 @@ with tab3:
      questões pessoais que levaram à desistência, e problemas financeiros que afetam a continuidade dos estudos. Para reduzir a evasão e melhorar a retenção dos alunos, recomendamos as seguintes ações:
 
 **Programas de Apoio Financeiro:**
-   - Criação de bolsas de estudo e subsídios para alunos em situação de vulnerabilidade econômica.
-   - Estabelecimento de um fundo de emergência para auxiliar estudantes que enfrentam crises financeiras temporárias.
+     - Estabelecimento de um fundo de emergência para auxiliar estudantes que enfrentam crises financeiras temporárias.
 
 **Flexibilidade nos Horários:**
    - Oferecer cursos noturnos e de fim de semana.
    - Expandir o acesso a aulas e materiais online (EAD).
-
-**Suporte Psicopedagógico:**
-   - Implementar um programa de mentoria e aconselhamento.
-   - Disponibilizar acompanhamento psicológico e pedagógico.
 
 **Envolvimento Familiar e Comunitário:**
    - Promover programas de envolvimento dos pais e atividades comunitárias.
